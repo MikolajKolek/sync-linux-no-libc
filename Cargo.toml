@@ -1,0 +1,15 @@
+[package]
+name = "sync-linux-no-libc"
+description = "A project aiming to reimplement some of the most basic Rust std::sync utilities on Linux without the use of libc"
+repository = "https://github.com/MikolajKolek/sync-linux-no-libc"
+homepage = "https://github.com/MikolajKolek/sync-linux-no-libc"
+documentation = "https://docs.rs/sync-linux-no-libc"
+categories = ["concurrency", "no-std", "no-std::no-alloc"]
+authors = ["Mikołaj Kołek"]
+readme = "README.md"
+license = "MIT"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+nc = "0.9.6"
