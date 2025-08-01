@@ -36,9 +36,9 @@ pub fn futex_wait(futex: &Atomic<u32>, expected: u32, timeout: Option<Duration>)
         }
 
         #[cfg(feature = "not_process_private")]
-        let op = nc::FUTEX_WAIT_BITSET | nc::FUTEX_PRIVATE_FLAG;
-        #[cfg(not(feature = "not_process_private"))]
         let op = nc::FUTEX_WAIT_BITSET;
+        #[cfg(not(feature = "not_process_private"))]
+        let op = nc::FUTEX_WAIT_BITSET | nc::FUTEX_PRIVATE_FLAG;
         let r = unsafe {
             // Use FUTEX_WAIT_BITSET rather than FUTEX_WAIT to be able to give an
             // absolute time rather than a relative time.
@@ -69,9 +69,9 @@ pub fn futex_wake(futex: &Atomic<u32>) -> bool {
     let ptr = futex as *const Atomic<u32>;
 
     #[cfg(feature = "not_process_private")]
-    let op = nc::FUTEX_WAKE | nc::FUTEX_PRIVATE_FLAG;
-    #[cfg(not(feature = "not_process_private"))]
     let op = nc::FUTEX_WAKE;
+    #[cfg(not(feature = "not_process_private"))]
+    let op = nc::FUTEX_WAKE | nc::FUTEX_PRIVATE_FLAG;
     unsafe {
         syscall!(Sysno::futex, ptr, op, 1)
             .expect("futex_wake failed") > 0
@@ -83,9 +83,9 @@ pub fn futex_wake_all(futex: &Atomic<u32>) {
     let ptr = futex as *const Atomic<u32>;
 
     #[cfg(feature = "not_process_private")]
-    let op = nc::FUTEX_WAKE | nc::FUTEX_PRIVATE_FLAG;
-    #[cfg(not(feature = "not_process_private"))]
     let op = nc::FUTEX_WAKE;
+    #[cfg(not(feature = "not_process_private"))]
+    let op = nc::FUTEX_WAKE | nc::FUTEX_PRIVATE_FLAG;
     unsafe {
         syscall!(Sysno::futex, ptr, op, i32::MAX)
             .expect("futex_wake_all failed");
